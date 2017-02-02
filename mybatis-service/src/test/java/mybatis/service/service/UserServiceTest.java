@@ -7,6 +7,10 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.TestExecutionListeners;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * 功能概要：UserService单元测试
  *
@@ -24,5 +28,102 @@ public class UserServiceTest extends SpringTestCase {
         logger.debug("查找结果" + user);
     }
 
+    @Test
+    public void selectUserByNameTest() {
+        User user = userService.selectUserByName("test001");
+        logger.debug("查找结果" + user);
+    }
+    @Test
+    public void updateUserByIdTest(){
+        User user = new User();
+        user.setUserName("test001_new");
+        user.setUserId(10);
+        userService.updateUserById(user);
+    }
+    @Test
+    public void insertUser(){
+        User user = new User();
+        user.setUserName("test002");
+        user.setUserId(2);
+        user.setUserPassword("test002");
+        user.setUserEmail("test002@qq.com");
+        Integer integer =userService.insertUser(user);
+        logger.debug("新插入数据:"+integer);
+    }
+    @Test
+    public void deleteUserByIdTest() throws Throwable {
+        Integer integer = userService.deleteUserById(2);
+        logger.debug("删除的用户:"+integer);
+    }
 
+    @Test
+    public void batchInsertUserTest(){
+        List<User> userList = new ArrayList<User>();
+        for(int i = 10;i<20;i++){
+            User user = new User();
+            user.setUserName("test"+i);
+            user.setUserId(i);
+            user.setUserPassword("test"+i);
+            user.setUserEmail("test"+i+"@qq.com");
+            userList.add(user);
+        }
+        Integer integer =userService.batchInsertUser(userList);
+        logger.debug("新插入数据:"+integer);
+    }
+
+    @Test
+    public void batchUpdateUserTest(){
+        List<User> userList = new ArrayList<User>();
+        for(int i = 10;i<20;i++){
+            User user = new User();
+            user.setUserName("test"+i+"_new");
+            user.setUserId(i);
+            user.setUserPassword("test"+i+"_new");
+            user.setUserEmail("test"+i+"_new"+"@qq.com");
+            userList.add(user);
+        }
+        Integer integer =userService.batchUpdateUser(userList);
+        logger.debug("新插入数据:"+integer);
+    }
+    @Test
+    public void batchDeleteUser(){
+        List<User> userList = new ArrayList<User>();
+        for(int i = 10;i<15;i++){
+            User user = new User();
+            user.setUserName("test"+i+"_new");
+            user.setUserId(i);
+            user.setUserPassword("test"+i+"_new");
+            user.setUserEmail("test"+i+"_new"+"@qq.com");
+            userList.add(user);
+        }
+        Integer integer =userService.batchDeleteUser(userList);
+        logger.debug("新插入数据:"+integer);
+    }
+
+
+    @Test
+    public void batchQueryUser(){
+        List<User> userList = new ArrayList<User>();
+        for(int i = 15;i<20;i++){
+            User user = new User();
+            user.setUserId(i);
+            userList.add(user);
+        }
+        List<User> userList2 = new ArrayList<User>();
+        userList2 =userService.batchQueryUser(userList);
+        logger.debug("新插入数据:"+userList2);
+    }
+
+    @Test
+    public void batchQueryUserMap(){
+        List<User> userList = new ArrayList<User>();
+        for(int i = 15;i<20;i++){
+            User user = new User();
+            user.setUserId(i);
+            userList.add(user);
+        }
+        List<HashMap> userList2 = new ArrayList<HashMap>();
+        userList2 =userService.batchQueryUserMap(userList);
+        logger.debug("新插入数据:"+userList2);
+    }
 }
