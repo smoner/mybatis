@@ -41,7 +41,7 @@ public class UserServiceTest extends SpringTestCase {
         userService.updateUserById(user);
     }
     @Test
-    public void insertUser(){
+    public void insertUser() throws Exception{
         User user = new User();
         user.setUserName("test002");
         user.setUserId(2);
@@ -125,5 +125,23 @@ public class UserServiceTest extends SpringTestCase {
         List<HashMap> userList2 = new ArrayList<HashMap>();
         userList2 =userService.batchQueryUserMap(userList);
         logger.debug("新插入数据:"+userList2);
+    }
+    @Test
+    public void transactrionTest() throws Throwable {
+        User user = new User();
+        user.setUserName("test"+33+"_new");
+        user.setUserId(33);
+        user.setUserPassword("test"+33+"_new");
+        user.setUserEmail("test"+33+"_new"+"@qq.com");
+
+
+        User user2 = new User();
+        user2.setUserName("test4"+16+"_new");
+        user2.setUserId(16);
+        user2.setUserPassword("test"+16+"_new");
+        user2.setUserEmail("test"+16+"_new2"+"@qq.com");
+
+//        userService.deleteUserById(user.getUserId());
+        userService.transactrionTest(user,user2);
     }
 }
